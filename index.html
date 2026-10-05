@@ -671,7 +671,53 @@
         outline-offset: 4px;
         border-radius: 2px;
       }
-    </style>
+    
+
+      nav.report-bar { gap: 16px; padding-top: 10px; padding-bottom: 10px; }
+      .report-links { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+      .report-links > span { color: var(--muted); font-size: 12px; }
+      #shortlist { font-weight: 700; font-size: 14px; padding: 6px 8px; }
+      #shortlist[aria-pressed="true"] { background: #173c31; color: white; border-color: #173c31; }
+      .order-controls { display: flex; align-items: center; gap: 14px; margin-left: auto; min-width: 0; }
+      .order-control { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 650; min-width: 0; }
+      .order-control select {
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 7px 6px;
+        color: var(--ink);
+        background: white;
+        font: inherit;
+        min-width: 0;
+        max-width: 100%;
+        height: 36px;
+      }
+      #sort { width: 152px; }
+      #prioritize { width: 160px; }
+      .order-control:has(select:disabled) { opacity: .5; }
+      .order-control select:disabled { cursor: not-allowed; }
+      .print-button { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 6px; }
+      .print-button svg { width: 20px; height: 20px; }
+      .report-bar button:focus-visible, .report-bar select:focus-visible { outline: 2px solid #24644c; outline-offset: 3px; }
+      #order-description { font-size: 13px; color: var(--muted); margin: 0 0 16px; }
+      #order-description[hidden] { display: none; }
+      .priority-method { font-size: 13px; color: var(--muted); margin-top: 16px; }
+      .priority-method summary { cursor: pointer; font-weight: 650; }
+      .priority-method li { margin: 6px 0; }
+      @media(max-width:700px) {
+        nav.report-bar { gap: 8px 10px; }
+        .report-links { gap: 7px; }
+        .order-controls { order: 3; width: 100%; gap: 10px; margin-left: 0; }
+        .order-control { flex: 1.2; }
+        .order-control:first-child { flex: .8; }
+        .order-control select { width: 100%; flex: 1; }
+        .print-button { margin-left: auto; }
+      }
+
+      main > nav.report-bar { padding: 10px 16px; margin-top: 20px; border: 1px solid var(--line); border-radius: 12px; }
+      #priority-context #order-description { margin: 12px 0 0; }
+      main > .intro { display: block; }
+      main > #priority-context { margin-top: 20px; }
+</style>
   </head>
   <body>
     <header>
@@ -682,19 +728,18 @@
         Room for the dog.<br>Ready for the weekend.
       </h1>
       <p>
-        A practical new-and-used EV report for city parking, mountain trips, camping, and the occasional long drive. The Rivian R2 is the size reference; the brief is two adults, a sheepdog, gear and home charging.
+        A practical new-and-used EV report for mountain trips, camping, city parking, and the occasional long drive. The Rivian R2 is the size reference; the brief is two adults, a sheepdog, and gear.
       </p>
-      <div class="chips">
-        <span>Compact footprint</span><span>AWD required</span><span>Winter & gravel roads</span><span>Road-trip charging</span><span>Home Level 2 planned</span>
-      </div>
+      <p>
+        All selected configurations have AWD, with a compact footprint prioritized. We assume most charging is at home on Level 2; key criteria include suitability for winter and gravel roads and fast charging on road trips.
+      </p>
+      
     </header>
-    <nav aria-label="Report navigation">
-      <a href="#new">New</a><a href="#used">Used</a>
-      <div class="controls">
-        <label class="sr" for="search">Find a car</label><input id="search" placeholder="Find a car…" type="search"><button id="shortlist" aria-pressed="false">Shortlist only</button><button onclick="window.print()">Print / PDF</button>
-      </div>
-    </nav>
+        
     <main>
+      
+      
+
       <div class="intro">
         <div class="panel">
           <h2>
@@ -707,27 +752,9 @@
             These are qualitative fit judgments, not measured rankings. Bring the dog or crate and representative luggage to the fit test.
           </p>
         </div>
-        <div class="panel">
-          <h2>
-            Keep the original brief visible
-          </h2>
-          <ul>
-            <li>
-              R2 length reference: <b>185.9 inches</b>.
-            </li>
-            <li>
-              Most trips are regional; rare cross-country trips should not dominate the decision.
-            </li>
-            <li>
-              AWD is required. Used purchases may be <b>2024, 2025 or 2026</b>; new vehicles do not belong in the used section.
-            </li>
-            <li>
-              Prices are sourced: selected-trim new starting prices and actual used asking-price examples. No incentives or fuel savings are assumed.
-            </li>
-          </ul>
-        </div>
+        
       </div>
-      <details class="panel method" open>
+      <details class="panel method">
         <summary>
           How to read the numbers
         </summary>
@@ -755,9 +782,79 @@
         <p>
           <b>Carsized images:</b> the available side comparisons are saved from Carsized’s rendered pages, with the candidate as car 1 and R2 behind as car 2. Captions identify the pictured generation and any known mismatch. These are visual size references; use the card’s model-year specifications for range, charging and clearance. Photos are embedded in this HTML for offline viewing. Uncharted and R3X use supplied illustrations/photos instead of Carsized comparisons; neither has a verified R2 overlay here.
         </p>
-      </details>
+      <details class="priority-method">
+          <summary>How priorities work</summary>
+          <p>These are comparison shortcuts, not measured verdicts about the best car. Each priority blends the available card figures within New and Used. “Shortlist only” keeps working; they do not change the underlying ranking.</p>
+          <ul>
+            <li><b>Everyday &amp; city:</b> shorter length 50%, lower price 30%, range 20%.</li>
+            <li><b>Road trips:</b> shorter 10–80% charge time 45%, range 35%, reliability evidence 15%, compatible Supercharger access 5%.</li>
+            <li><b>Camping &amp; trailheads:</b> clearance 65%, shorter length 15%, range 20%. Every listed car is AWD. Cargo shape, dog/crate fit, tires and off-road performance are not scored; verify them in person.</li>
+            <li><b>Best value:</b> lower price 55%, range 20%, reliability evidence 15%, shorter charge time 10%.</li>
+          </ul>
+          <p>Figures are scaled against the other cars in their own section. Unknown reliability and network evidence are omitted, with remaining weights adjusted; unknown does not mean good or bad. Reliability contributes only a small qualitative signal, not a failure probability. Predictions and owner surveys are different evidence.</p>
+          <p>Cars missing a priority’s core figures, and the future R3X, appear after the ranked options. No score is invented for missing data. Simple numeric sorts also put missing figures last; ties retain the original order.</p>
+          <p>Price uses the main displayed asking price or starting MSRP, excluding shipping and taxes; destination treatment follows the card. It is not an out-the-door comparison. For XC40 Recharge / EX40, price uses the cheaper displayed example, while other sorts and priorities use the primary 2025 EX40 figures. Charging claims and clearance measurement conventions differ; the card notes still apply.</p>
+        </details>
+</details>
+      <nav class="report-bar" aria-label="Report navigation">
+      <div class="report-links">
+        <a href="#new">New</a><span aria-hidden="true">·</span>
+        <a href="#used">Used</a><span aria-hidden="true">·</span>
+        <button type="button" id="shortlist" aria-pressed="false">Shortlist only</button>
+      </div>
+      <div class="order-controls">
+        <label class="order-control" for="sort">Sort:
+          <select id="sort">
+            <option value="priority">Priority Order</option>
+            <option value="price">Price: low to high</option>
+            <option value="length">Length: shortest</option>
+            <option value="range">Range: longest</option>
+            <option value="minutes">Charging: fastest</option>
+            <option value="clearance">Clearance: highest</option>
+            <option value="name">Name: A–Z</option>
+          </select>
+        </label>
+        <label class="order-control" for="prioritize">Prioritize:
+          <select id="prioritize">
+            <option value="recommended">Recommended</option>
+            <option value="city">Everyday &amp; city</option>
+            <option value="road">Road trips</option>
+            <option value="camp">Camping &amp; trailheads</option>
+            <option value="value">Best value</option>
+          </select>
+        </label>
+      </div>
+      <button type="button" class="print-button" onclick="window.print()" aria-label="Print / PDF" title="Print / PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M6 9V3h12v6M6 17H3V9h18v8h-3"/>
+          <path d="M6 14h12v7H6z"/><path d="M17 11h1"/>
+        </svg>
+      </button>
+    </nav>
+      <div class="panel" id="priority-context">
+          <h2 id="priority-title" aria-live="polite">Priority: Recommended</h2>
+          <p id="order-description" hidden></p>
+          <div id="priority-copy">
+          <ul>
+            <li>
+              R2 length reference: <b>185.9 inches</b>.
+            </li>
+            <li>
+              Most trips are regional; rare cross-country trips should not dominate the decision.
+            </li>
+            <li>
+              AWD is required. Used purchases may be <b>2024, 2025 or 2026</b>; new vehicles do not belong in the used section.
+            </li>
+            <li>
+              Prices are sourced: selected-trim new starting prices and actual used asking-price examples. No incentives or fuel savings are assumed.
+            </li>
+          </ul>
+        </div>
+        </div>
+
+
       <p id="empty" class="empty" role="status">
-        No vehicles match this filter. Clear the search or turn off “Shortlist only”.
+        No vehicles match this filter. Turn off “Shortlist only” to see every car.
       </p>
       <section id="new">
         <div class="section-title">
@@ -4432,7 +4529,165 @@
       </footer>
     </main>
     <script>
-      const search=document.querySelector('#search'),button=document.querySelector('#shortlist');let shortlist=false;function filter(){let count=0;document.querySelectorAll('.car').forEach(c=>{const show=c.textContent.toLowerCase().includes(search.value.toLowerCase())&&(!shortlist||c.dataset.fit==='Shortlist');c.hidden=!show;if(show)count++});document.querySelector('#empty').style.display=count?'none':'block'}search.addEventListener('input',filter);button.addEventListener('click',()=>{shortlist=!shortlist;button.setAttribute('aria-pressed',String(shortlist));button.textContent=shortlist?'Show all cars':'Shortlist only';filter()});
+      // Read the visible card figures so hand-edited report values remain authoritative.
+      const shortlistButton = document.querySelector('#shortlist');
+      const sortSelect = document.querySelector('#sort');
+      const prioritySelect = document.querySelector('#prioritize');
+      const description = document.querySelector('#order-description');
+      const contextTitle = document.querySelector('#priority-title');
+      const contextCopy = document.querySelector('#priority-copy');
+      const recommendedTitle = contextTitle.textContent.trim();
+      const recommendedCopy = contextCopy.innerHTML;
+      let shortlist = false;
+      let priority = 'recommended';
+
+      function numberFrom(text) {
+        if (!text || /not verified|not yet|unresolved|pending/i.test(text)) return null;
+        const match = text.replaceAll(',', '').match(/\d+(?:\.\d+)?/);
+        return match ? Number(match[0]) : null;
+      }
+
+      function readMetrics(card, originalIndex) {
+        const values = {};
+        card.querySelectorAll(':scope > dl > div').forEach(row => {
+          values[row.querySelector('dt').textContent.trim()] = row.querySelector('dd').textContent.trim();
+        });
+        const priceText = card.querySelector('.pricing-disclosure > summary > strong').innerText;
+        const prices = [...priceText.matchAll(/\$([\d,]+)/g)].map(m => Number(m[1].replaceAll(',', '')));
+        const rating = card.querySelector('.reliability').dataset.rating;
+        const reliability = rating === 'favorable' ? 1 : rating === 'unfavorable' ? 0 :
+          rating === 'caution' && !card.querySelector('.reliability summary strong').textContent.toLowerCase().includes('mixed') ? 0.5 : null;
+        const networkText = card.querySelector('.network').textContent;
+        return {
+          card, originalIndex, name: card.dataset.name,
+          length: numberFrom(values.Length),
+          clearance: numberFrom(values['Ground clearance']),
+          range: numberFrom(values['Full-charge range']),
+          minutes: numberFrom(values['DC fast charge · 10–80%']),
+          price: prices.length ? Math.min(...prices) : null,
+          reliability,
+          network: /\bYes\b/.test(networkText) ? 1 : /\bNo\b/.test(networkText) ? 0 : null,
+          future: /not yet available/i.test(card.querySelector('.trim').textContent),
+        };
+      }
+
+      const groups = [...document.querySelectorAll('#new > .cards, #used > .cards')].map(grid => ({
+        grid, items: [...grid.querySelectorAll(':scope > .car')].map(readMetrics),
+      }));
+      const profiles = {
+        city: { weights: { length: -0.5, price: -0.3, range: 0.2 }, core: ['length', 'price', 'range'],
+          text: 'Everyday & city: prioritizes shorter cars, lower prices and useful range.' },
+        road: { weights: { minutes: -0.45, range: 0.35, reliability: 0.15, network: 0.05 }, core: ['minutes', 'range'],
+          text: 'Road trips: prioritizes faster 10–80% charging and longer range, with smaller reliability and Supercharger-access inputs.' },
+        camp: { weights: { clearance: 0.65, length: -0.15, range: 0.2 }, core: ['clearance', 'length', 'range'],
+          text: 'Camping & trailheads: prioritizes clearance, compact length and range. Dog/crate fit and off-road performance still need an in-person check.' },
+        value: { weights: { price: -0.55, range: 0.2, reliability: 0.15, minutes: -0.1 }, core: ['price', 'range', 'minutes'],
+          text: 'Best value: prioritizes lower purchase prices, balanced with range, reliability evidence and charging.' },
+      };
+      const sortDescriptions = {
+        recommended: 'Recommended order. Choose a priority or sort by a specific figure; New and Used stay separate.',
+        price: 'Price: low to high. Uses displayed vehicle prices before shipping and taxes; XC40 / EX40 uses its cheaper example.',
+        length: 'Length: shortest first.',
+        range: 'Range: longest first. Uses each card’s selected configuration.',
+        minutes: 'Charging: shortest 10–80% time first. Charger conditions and claim sources still matter.',
+        clearance: 'Clearance: highest first. Measurement conventions and loading still matter.',
+        name: 'Model name: A–Z.',
+      };
+      const priorityContext = {
+        city: ['Shorter length carries the most weight (50%), followed by price (30%) and range (20%).', 'Think about parking, daily errands and room for the dog; cargo fit is not measured.', 'AWD remains required. Home Level 2 charging is assumed for most daily use.'],
+        road: ['Charging time (45%) and range (35%) matter most; reliability evidence (15%) and Supercharger access (5%) contribute less.', 'The card’s selected battery and wheels apply; cold weather and charger conditions can change actual results.', 'New and Used remain separate. The combined Volvo card uses 2025 EX40 driving and charging figures.'],
+        camp: ['Ground clearance leads (65%), with range (20%) and shorter length (15%) also considered.', 'All selected configurations have AWD. Clearance conventions vary; this is not an off-road capability rating.', 'Bring the dog or crate and camping gear to check cargo fit, and consider tires, winter conditions and the bike rack.'],
+        value: ['Vehicle price leads (55%), balanced with range (20%), reliability evidence (15%) and charging time (10%).', 'Prices exclude shipping and taxes; destination treatment follows each card. The combined Volvo card uses its cheaper example.', 'Check repair history, remaining warranty and written out-the-door totals before deciding which car is a deal.'],
+      };
+
+      function updateContext(sort) {
+        const recommended = sort === 'priority' && priority === 'recommended';
+        description.hidden = recommended;
+        if (recommended) {
+          contextTitle.textContent = recommendedTitle;
+          description.textContent = '';
+          contextCopy.innerHTML = recommendedCopy;
+          return;
+        }
+        contextTitle.textContent = sort === 'priority'
+          ? 'Priority: ' + prioritySelect.selectedOptions[0].textContent
+          : 'Compare by: ' + sortSelect.selectedOptions[0].textContent;
+        description.textContent = sort === 'priority' ? profiles[priority].text : sortDescriptions[sort];
+        const bullets = sort === 'priority' ? priorityContext[priority] : [
+          'Priority ranking is paused while this sort is selected. Choose Sort: Priority to return to your remembered preference.',
+          'New and Used stay separate, missing figures go last, and the shortlist filter still applies.',
+          'These are card figures rather than a complete assessment; measurement conventions and source notes still matter.',
+        ];
+        const list = document.createElement('ul');
+        bullets.forEach(text => {
+          const li = document.createElement('li');
+          li.textContent = text;
+          list.appendChild(li);
+        });
+        contextCopy.replaceChildren(list);
+      }
+
+      function priorityScore(item, profile, items) {
+        if (item.future || profile.core.some(key => item[key] === null)) return null;
+        let score = 0;
+        let totalWeight = 0;
+        for (const [key, weight] of Object.entries(profile.weights)) {
+          if (item[key] === null) continue;
+          const values = items.filter(i => !i.future && i[key] !== null).map(i => i[key]);
+          const min = Math.min(...values), max = Math.max(...values);
+          const scaled = max === min ? 0.5 : (item[key] - min) / (max - min);
+          score += Math.abs(weight) * (weight < 0 ? 1 - scaled : scaled);
+          totalWeight += Math.abs(weight);
+        }
+        return score / totalWeight;
+      }
+
+      function compareNumbers(a, b, descending = false) {
+        if (a === null || b === null) return a === b ? 0 : a === null ? 1 : -1;
+        return descending ? b - a : a - b;
+      }
+
+      function applyOrder() {
+        const sort = sortSelect.value;
+        for (const { grid, items } of groups) {
+          const ranked = sort === 'priority' && priority !== 'recommended';
+          const scores = ranked ? new Map(items.map(item => [item, priorityScore(item, profiles[priority], items)])) : null;
+          const ordered = [...items].sort((a, b) => {
+            let comparison = 0;
+            if (ranked) comparison = compareNumbers(scores.get(a), scores.get(b), true);
+            else if (sort === 'name') comparison = a.name.localeCompare(b.name);
+            else if (sort !== 'priority') comparison = compareNumbers(a[sort], b[sort], ['range', 'clearance'].includes(sort));
+            return comparison || a.originalIndex - b.originalIndex;
+          });
+          ordered.forEach(item => grid.appendChild(item.card));
+        }
+        prioritySelect.disabled = sort !== 'priority';
+        updateContext(sort);
+        filter();
+      }
+
+      function filter() {
+        let count = 0;
+        for (const { items } of groups) for (const { card } of items) {
+          const show = !shortlist || card.dataset.fit === 'Shortlist';
+          card.hidden = !show;
+          if (show) count++;
+        }
+        document.querySelector('#empty').style.display = count ? 'none' : 'block';
+      }
+
+      prioritySelect.addEventListener('change', () => {
+        priority = prioritySelect.value;
+        applyOrder();
+      });
+      sortSelect.addEventListener('change', applyOrder);
+      shortlistButton.addEventListener('click', () => {
+        shortlist = !shortlist;
+        shortlistButton.setAttribute('aria-pressed', String(shortlist));
+        filter();
+      });
+      applyOrder();
+
     </script>
   </body>
 </html>
